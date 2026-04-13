@@ -5,9 +5,6 @@
 <table align=center><td>
 
 ```rust
-#![doc(html_favicon_url = include_data_url!("./src/favicon.ico", "image/x-icon"))]
-#![doc(html_logo_url = include_data_url!("./src/logo.png", "image/png"))]
-
 /// Look at this cat: ![](
 #[doc = include_data_url!("./src/cat.jpg", "image/jpeg")]
 /// )
@@ -28,9 +25,6 @@ cargo add jcbhmr-include-data-url
 
 ```rust
 use jcbhmr_include_data_url::include_data_url;
-
-#![doc(html_favicon_url = include_data_url!("./src/favicon.ico", "image/x-icon"))]
-#![doc(html_logo_url = include_data_url!("./src/logo.png", "image/png"))]
 
 /// ![](
 #[doc = include_data_url!("./src/cat.jpg", "image/jpeg")]

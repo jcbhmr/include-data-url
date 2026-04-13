@@ -1,5 +1,7 @@
-// #![doc(html_favicon_url = include_data_url!("./src/favicon.ico", "image/x-icon"))]
-// #![doc(html_logo_url = include_data_url!("./src/logo.png", "image/png"))]
+#![doc(
+    html_favicon_url = "https://docs.rs/crate/jcbhmr-include-data-url/0.1.0/source/src/favicon.ico"
+)]
+#![doc(html_logo_url = "https://docs.rs/crate/jcbhmr-include-data-url/0.1.0/source/src/logo.png")]
 //! TODO
 
 use base64::prelude::*;
@@ -19,16 +21,6 @@ use syn::{
 /// the author wants to reference a local file.
 ///
 /// # Examples
-///
-/// Set the [rustdoc](https://doc.rust-lang.org/rustdoc/) favicon and logo to a `data:` URL generated from crate-local assets.
-///
-/// <div><code>lib.rs</code></div>
-///
-/// ```
-/// # use jcbhmr_include_data_url::include_data_url;
-/// #![doc(html_favicon_url = include_data_url!("./src/favicon.ico", "image/x-icon"))]
-/// #![doc(html_logo_url = include_data_url!("./src/logo.png", "image/png"))]
-/// ```
 ///
 /// Embed a crate-local image as a `data:` URL in a documentation comment.
 ///
