@@ -9,8 +9,7 @@ categories = []
 description = "🔗 Like include_str!(), but returns a data: URL"
 keywords = ["data-url", "embed-image"]
 repository = "https://github.com/jcbhmr/include-data-url"
-# rust-version = "1.94"
-
+rust-version = "1.85"
 
 [lib]
 proc-macro = true
