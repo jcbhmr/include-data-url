@@ -8,7 +8,7 @@ authors = ["Jacob Hummer <jcbhmr@outlook.com> (https://jcbhmr.com)"]
 categories = []
 description = "🔗 Like include_str!(), but returns a data: URL"
 keywords = ["data-url", "embed-image"]
-repository = "https://github.com/jcbhmr/include-data-url.git"
+repository = "https://github.com/jcbhmr/include-data-url"
 # rust-version = "1.94"
 
 

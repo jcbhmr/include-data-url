@@ -5,7 +5,9 @@
 <table align=center><td>
 
 ```rust
-/// Look at this cat: ![](
+/// Look at this cat:
+/// 
+/// ![](
 #[doc = include_data_url!("./src/cat.jpg", "image/jpeg")]
 /// )
 struct Cat;
