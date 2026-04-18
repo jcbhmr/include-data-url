@@ -1,13 +1,13 @@
-#![doc(
-    html_favicon_url = "https://docs.rs/crate/jcbhmr-include-data-url/0.2.0/source/src/favicon.ico"
-)]
-#![doc(html_logo_url = "https://docs.rs/crate/jcbhmr-include-data-url/0.2.0/source/src/logo.png")]
 //! This package provides one procedural macro: [`include_data_url!`].
 
 use base64::prelude::*;
 use derive_more::{From, Into};
 use quote::quote;
-use std::{env, fs, path};
+use regex::{Captures, Regex};
+use std::{
+    env, fs, io,
+    path::{self, Path},
+};
 use syn::{
     LitStr, Token,
     parse::{Parse, ParseStream},
@@ -22,10 +22,10 @@ use syn::{
 /// where a standalone URL is expected but the author wants to reference a local
 /// file.
 ///
-/// **Signature:** `include_data_url!(path: literal_string, type: literal_string) -> literal_string`
+/// **Signature:** `include_data_url!(path, type)`
 ///
-/// - `path` is relative to the crate root, not the current file. The path must be within the crate as determined by `absolute(path).starts_with(cwd)`.
-/// - `type` is the MIME type of the data that will be inlined. For example, `text/plain`, `image/jpeg`, etc.
+/// - **`path`:** A string literal. Interpreted as a path relative to the crate root, not the current file. The path must be within the crate as determined by `absolute(path).starts_with(cwd)`.
+/// - **`type`:** A string literal. Representing the MIME type of the data that will be inlined. Examples: `"text/plain"`, `"image/png"`, `"image/jpeg"`.
 ///
 /// # Example
 ///
@@ -59,7 +59,9 @@ use syn::{
 /// <caption>Rendered</caption>
 /// <tr><td>
 ///
-/// ![](https://docs.rs/crate/jcbhmr-include-data-url/0.2.0/source/src/cat-screenshot.png)
+/// ![](
+#[doc = remote_jcbhmr_include_data_url::include_data_url!("./src/cat-screenshot.png", "image/png")]
+/// )
 ///
 /// </td></tr>
 /// </table>
@@ -87,19 +89,14 @@ pub fn include_data_url(input: proc_macro::TokenStream) -> proc_macro::TokenStre
     let path = input.path.value();
     let type_ = input.type_.value();
 
-    let current_dir = env::current_dir()
-        .unwrap_or_else(|e| panic!("current directory should be accessible: {}", e));
-    let path_absolute = path::absolute(&path)
-        .unwrap_or_else(|e| panic!("{:?} should be absolute-izable: {}", path, e));
-    if !path_absolute.starts_with(&current_dir) {
-        panic!(
-            "{:?} should be within the crate directory {:?}",
-            path_absolute, current_dir
-        );
+    if !path::absolute(&path)
+        .unwrap()
+        .starts_with(env::current_dir().unwrap())
+    {
+        panic!("{} not in crate directory", &path);
     }
 
-    let data = fs::read(&path_absolute)
-        .unwrap_or_else(|e| panic!("{:?} should be readable: {}", path_absolute, e));
+    let data = fs_err::read(&path).unwrap();
     let encoded = BASE64_STANDARD.encode(&data);
     let data_url = format!("data:{};base64,{}", type_, encoded);
 

@@ -1,6 +1,9 @@
+[workspace]
+members = ["crates/*"]
+
 [package]
 name = "jcbhmr-include-data-url"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 homepage = "https://crates.io/crates/jcbhmr-include-data-url"
@@ -20,3 +23,9 @@ derive_more = { version = "2.1.1", features = ["full"] }
 proc-macro2 = "1.0.106"
 quote = "1.0.45"
 syn = { version = "2.0.117", features = ["full"] }
+remote-jcbhmr-include-data-url = { package = "jcbhmr-include-data-url", version = "0.2.0" }
+fs-err = "3.3.0"
+regex = "1.12.3"
+
+[dev-dependencies]
+dedent = "0.1.1"
