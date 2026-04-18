@@ -1,10 +1,10 @@
 use base64::prelude::*;
 use cargo_toml::Manifest;
-use regex::{Captures, Regex, Replacer};
+use regex::{Captures, Regex};
 use std::{
     env,
     error::Error,
-    path::{self, Path, PathBuf},
+    path::{self, PathBuf},
 };
 
 fn replace_all_err<T: AsRef<str>, E>(
@@ -27,7 +27,8 @@ fn replace_all_err<T: AsRef<str>, E>(
 
 pub fn metabuild() {
     fn inner() -> Result<(), Box<dyn Error>> {
-        let cargo_manifest_path = env::var_os("CARGO_MANIFEST_PATH").ok_or_else(|| "CARGO_MANIFEST_PATH not set")?;
+        let cargo_manifest_path =
+            env::var_os("CARGO_MANIFEST_PATH").ok_or_else(|| "CARGO_MANIFEST_PATH not set")?;
         let cargo_manifest_path = PathBuf::from(cargo_manifest_path);
         let manifest = Manifest::from_path(&cargo_manifest_path)?;
         if let Some(product) = manifest.lib.as_ref() {

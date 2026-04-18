@@ -63,9 +63,7 @@ fn include_data_url_build() -> Result<(), Box<dyn Error>> {
         .into());
     }
 
-    let html = fs::read_to_string(
-        root.join("target/doc/include_data_url_build/index.html")
-    )?;
+    let html = fs::read_to_string(root.join("target/doc/include_data_url_build/index.html"))?;
     assert!(html.contains("data:image/x-icon;"));
     assert!(html.contains("data:image/png;"));
 
