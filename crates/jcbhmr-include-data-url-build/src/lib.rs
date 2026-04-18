@@ -28,14 +28,14 @@ fn replace_all_err<T: AsRef<str>, E>(
 pub fn metabuild() {
     fn inner() -> Result<(), Box<dyn Error>> {
         let cargo_manifest_path =
-            env::var_os("CARGO_MANIFEST_PATH").ok_or_else(|| "CARGO_MANIFEST_PATH not set")?;
+            env::var_os("CARGO_MANIFEST_PATH").ok_or("CARGO_MANIFEST_PATH not set")?;
         let cargo_manifest_path = PathBuf::from(cargo_manifest_path);
         let manifest = Manifest::from_path(&cargo_manifest_path)?;
         if let Some(product) = manifest.lib.as_ref() {
             let lib_path = product
                 .path
                 .as_deref()
-                .ok_or_else(|| format!("lib.path should exist"))?;
+                .ok_or("lib.path should exist")?;
             let lib_path = path::absolute(lib_path)?;
             let lib_text = fs_err::read_to_string(&lib_path)?;
             // 1: `/* jcbhmr_include_data_url_build::include_data_url!("`
