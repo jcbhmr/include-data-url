@@ -3,10 +3,9 @@
 use base64::prelude::*;
 use derive_more::{From, Into};
 use quote::quote;
-use regex::{Captures, Regex};
 use std::{
-    env, fs, io,
-    path::{self, Path},
+    env,
+    path::{self},
 };
 use syn::{
     LitStr, Token,
